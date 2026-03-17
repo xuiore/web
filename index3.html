@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>AI Direction English Game</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(
+    rgba(0,0,0,0.7),
+    rgba(0,0,0,0.8)
+  ),
+  url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee");
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+}
+
+.container {
+  max-width: 720px;
+  margin: 40px auto;
+  padding: 25px;
+  border-radius: 15px;
+  background: linear-gradient(
+    135deg,
+    rgba(0,0,0,0.85),
+    rgba(255,87,34,0.15),
+    rgba(33,150,243,0.15)
+  );
+  box-shadow: 0 0 25px rgba(255,87,34,0.4);
+}
+
+h1 {
+  text-align: center;
+  color: #ff5722;
+}
+
+.question {
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+.answer-box {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(0,0,0,0.6);
+  border-radius: 10px;
+  border-left: 5px solid #2196f3;
+}
+
+.phonics {
+  color: #ff9800;
+  margin-top: 5px;
+}
+
+button {
+  padding: 10px 15px;
+  margin: 6px 4px;
+  font-size: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.ask { background: #2196f3; }
+.listen { background: #4caf50; }
+.record { background: #ff5722; }
+.play { background: #9c27b0; }
+.next { background: #ff9800; }
+
+.result {
+  margin-top: 10px;
+  color: #00e5ff;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <h1>🧭 AI Direction English Game</h1>
+
+  <div class="question" id="question"></div>
+  <button class="ask" onclick="speakQuestion()">🔊 ฟังคำถาม AI</button>
+
+  <div class="answer-box">
+    <div><strong>คำตอบ:</strong> <span id="answer"></span></div>
+    <div class="phonics">คำอ่าน: <span id="phonics"></span></div>
+
+    <button class="listen" onclick="speakAnswer()">🔊 ฟังคำตอบ</button>
+    <button class="record" onclick="startRecording()">🎙️ อัดเสียงพูด</button>
+    <button class="play" onclick="playRecording()">▶️ ฟังเสียงตัวเอง</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <button class="next" onclick="nextQuestion()">➡️ ข้อต่อไป</button>
+</div>
+
+<script>
+const data = [
+  {
+    q: "How do I go to the supermarket?",
+    a: "Go straight on.",
+    p: "โก สะ-เทรท ออน"
+  },
+  {
+    q: "What should I do at the corner?",
+    a: "Turn right.",
+    p: "เทิร์น ไรท์"
+  },
+  {
+    q: "How do I cross the street?",
+    a: "Cross over the road.",
+    p: "ครอส โอ-เวอะ เดอะ โรด"
+  },
+  {
+    q: "What should I do after the bank?",
+    a: "Go past the bank.",
+    p: "โก พาสท์ เดอะ แบงก์"
+  },
+  {
+    q: "Where is the café?",
+    a: "It’s next to the school.",
+    p: "อิทส์ เน็กซ์ ทู เดอะ สคูล"
+  },
+  {
+    q: "Where is the hospital?",
+    a: "It’s opposite to the park.",
+    p: "อิทส์ ออพ-พะ-ซิท ทู เดอะ พาร์ค"
+  }
+];
+
+let index = 0;
+let mediaRecorder;
+let audioChunks = [];
+let recordedAudio;
+
+function loadQuestion() {
+  document.getElementById("question").innerText =
+    "🤖 AI ถาม: " + data[index].q;
+  document.getElementById("answer").innerText = data[index].a;
+  document.getElementById("phonics").innerText = data[index].p;
+  document.getElementById("result").innerText = "";
+}
+
+function speakQuestion() {
+  const u = new SpeechSynthesisUtterance(data[index].q);
+  u.lang = "en-US";
+  speechSynthesis.speak(u);
+}
+
+function speakAnswer() {
+  const u = new SpeechSynthesisUtterance(data[index].a);
+  u.lang = "en-US";
+  speechSynthesis.speak(u);
+}
+
+async function startRecording() {
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  mediaRecorder = new MediaRecorder(stream);
+  audioChunks = [];
+
+  mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+  mediaRecorder.onstop = () => {
+    recordedAudio = new Audio(URL.createObjectURL(
+      new Blob(audioChunks, { type: "audio/webm" })
+    ));
+    document.getElementById("result").innerText =
+      "✅ อัดเสียงเรียบร้อยแล้ว";
+  };
+
+  mediaRecorder.start();
+  setTimeout(() => mediaRecorder.stop(), 4000);
+}
+
+function playRecording() {
+  if (recordedAudio) {
+    recordedAudio.play();
+  }
+}
+
+function nextQuestion() {
+  index = (index + 1) % data.length;
+  loadQuestion();
+}
+
+loadQuestion();
+</script>
+</body>
+</html>

@@ -1,0 +1,458 @@
+git<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>วางภาพมุมเว็บไซต์</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:linear-gradient(135deg,#0a0f2c,#001f3f,#000814);
+}
+
+/* ภาพมุมขวาบน */
+.corner-img{
+  position:fixed;       /* ล็อกตำแหน่งกับหน้าจอ */
+  top:20px;             /* ระยะห่างจากด้านบน */
+  right:20px;           /* ระยะห่างจากด้านขวา */
+  width:120px;          /* ขนาดภาพ */
+  border-radius:15px;
+  box-shadow:0 0 20px rgba(0,150,255,0.6);
+}
+</style>
+</head>
+
+<body>
+
+<img src="ตราโรงเรียน.png" class="corner-img">
+
+</body>
+</html>
+<style>
+</style>
+
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI, sans-serif;
+}
+
+
+body{
+
+  height:100vh;
+  overflow:hidden;
+  background:
+  radial-gradient(circle at 20% 30%, #003566 0%, transparent 40%),
+  radial-gradient(circle at 80% 70%, #001d3d 0%, transparent 40%),
+  linear-gradient(to bottom, #000814, #001d3d, #003566);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  text-align:center;
+  
+}
+
+/* กล่องกลาง */
+.card{
+  padding:60px;
+  background:rgba(224, 15, 15, 0.5);
+  border-radius:20px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 0 40px #cee85d;
+  z-index:10;
+}
+
+<body>
+
+h1{
+  font-size:40px;
+  color:#90e0ef;
+  text-shadow:0 0 20px #00b4d8;
+}
+
+button{
+  margin-top:25px;
+  padding:15px 35px;
+  border:none;
+  border-radius:30px;
+  font-size:18px;
+  cursor:pointer;
+  background:linear-gradient(45deg,#0077b6,#00b4d8);
+  color:rgb(10, 1, 1);
+  transition:0.3s;
+  box-shadow:0 0 20px #00b4d8;
+}
+button:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 40px #00f5ff;
+}
+
+/* ฝน */
+.rain{
+  position:absolute;
+  width:2px;
+  height:120px;
+  background:linear-gradient(transparent,#90e0ef);
+  animation:fall linear infinite;
+}
+
+@keyframes fall{
+  0%{transform:translateY(-150px);}
+  100%{transform:translateY(100vh);}
+}
+</style>
+</head>
+<div class="card"> 
+  <a href="nextpage.html">...</a>
+  <h1>UNIT 4 </h1>
+  <button onclick="goNext()">PRESS INSIDE</button>
+ 
+</div>
+
+<script>
+// สร้างฝน
+for(let i=0;i<200;i++){
+  let drop = document.createElement("div");
+  drop.classList.add("rain");
+  drop.style.left = Math.random()*100 + "vw";
+  drop.style.animationDuration = (Math.random()*1+0.5)+"s";
+  drop.style.opacity = Math.random();
+  document.body.appendChild(drop);
+}
+
+function goNext(){
+  window.location.href="http://127.0.0.1:5500/index2.html";
+}
+
+</script>
+
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>Electric Game Header</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:linear-gradient(135deg,#36b2e7,#1a0000,#2905bc);
+  font-family:'Segoe UI',sans-serif;
+  color:white;
+}
+
+/* ===== HEADER ===== */
+header{
+  position:fixed;       /* ติดบนสุดตลอด */
+  top:0;
+  left:0;
+  width:90%;
+  padding:15px 0;       /* ลด padding ให้ชิดบนมากขึ้น */
+  text-align:center;
+  background:linear-gradient(180deg,#000,#111);
+  border-bottom:2px solid rgb(184, 235, 43);
+  box-shadow:0 5px 20px rgba(255,0,0,0.6);
+  overflow:hidden;
+  z-index:999;
+}
+
+/* เส้นเรืองแสงด้านล่าง */
+header::after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:2px;
+  background:rgb(211, 6, 6);
+  box-shadow:0 0 20px red,0 0 40px crimson;
+}
+
+/* ===== 3D TEXT ===== */
+header h1{
+  font-size:38px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  position:relative;
+  display:inline-block;
+  color:#a5ef07;
+
+  text-shadow:
+    0 2px 0 #990000,
+    0 4px 0 #660000,
+    0 6px 15px rgba(255,0,0,0.8),
+    0 0 20px red,
+    0 0 40px crimson;
+}
+
+/* ===== เอฟเฟกต์ไฟฟ้าวิ่งผ่าน ===== */
+header h1::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:50%;
+  height:100%;
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(228, 17, 172, 0.8),
+    transparent
+  );
+  transform:skewX(-20deg);
+  animation:lightning 2s infinite;
+}
+
+@keyframes lightning{
+  0%{
+    left:-100%;
+  }
+  100%{
+    left:150%;
+  }
+}
+
+/* เนื้อหาไม่ให้ทับ header */
+.content{
+  padding-top:90px;
+  text-align:center;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>Unit: Direction (การบอกทิศทาง)</h1>
+</header>
+
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: radial-gradient(circle at center, #111, #000);
+  overflow:hidden;
+}
+
+/* กรอบภาพ */
+.image-box{
+  position:relative;
+  width:350px;
+  height:350px;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 0 30px #fff, 0 0 60px #00ffff;
+  animation: glow 2s infinite alternate;
+}
+
+/* ภาพ */
+.image-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* เอฟเฟกต์แสงระยิบระยับ */
+.image-box::before{
+  content:"";
+  position:absolute;
+  top:-100%;
+  left:-100%;
+  width:200%;
+  height:200%;
+  background: linear-gradient(45deg, 
+    transparent, 
+    rgba(255,255,255,0.8), 
+    transparent);
+  transform: rotate(25deg);
+  animation: shine 3s infinite;
+}
+
+/* Animation แสงวิ่ง */
+@keyframes shine{
+  0%{ transform:translateX(-100%) translateY(-100%) rotate(25deg);}
+  100%{ transform:translateX(100%) translateY(100%) rotate(25deg);}
+}
+
+/* Animation เรืองแสง */
+@keyframes glow{
+  from{ box-shadow:0 0 20px #fff, 0 0 40px #00ffff;}
+  to{ box-shadow:0 0 40px #ff00ff, 0 0 80px #00ffff;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="image-box">
+  <img src="ร.9.jpg" alt="my image">
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>Direction English Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f8ff;
+      padding: 20px;
+    }
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .speak { background: #4caf50; color: white; }
+    .record { background: #ff9800; color: white; }
+    .next { background: #2196f3; color: white; }
+    .answer {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>🎮 เกมฝึกบอกทางภาษาอังกฤษ</h2>
+
+  <p id="question"></p>
+  <p id="pronunciation"></p>
+
+  <button class="speak" onclick="speakText()">🔊 ฟังเสียง</button>
+  <button class="record" onclick="startRecord()">🎙️ อัดเสียงพูด</button>
+  <button class="next" onclick="nextQuestion()">➡️ ข้อต่อไป</button>
+
+  <div class="answer" id="userAnswer"></div>
+</div>
+
+<script>
+  const data = [
+    {
+      q: "How do I go to the supermarket?",
+      a: "Go straight on and turn left.",
+      p: "โก สะ-เทรท ออน แอนด์ เทิร์น เลฟท์"
+    },
+    {
+      q: "What should I do after the bank?",
+      a: "Walk along the road.",
+      p: "วอล์ค อะ-ลอง เดอะ โรด"
+    },
+    {
+      q: "How do I cross the street?",
+      a: "Cross over the road.",
+      p: "ครอส โอ-เวอะ เดอะ โรด"
+    },
+    {
+      q: "Where is the school?",
+      a: "It’s next to the hospital.",
+      p: "อิทส์ เน็กซ์ ทู เดอะ ฮอส-พิ-เทิล"
+    },
+    {
+      q: "Where is the café?",
+      a: "It’s opposite to the bank.",
+      p: "อิทส์ ออพ-พะ-ซิท ทู เดอะ แบงก์"
+    }
+  ];
+
+  let index = 0;
+
+  function loadQuestion() {
+    document.getElementById("question").innerText =
+      "🤖 AI ถาม: " + data[index].q;
+    document.getElementById("pronunciation").innerText =
+      "📖 คำตอบตัวอย่าง: " + data[index].a +
+      "\n🔤 คำอ่าน: " + data[index].p;
+    document.getElementById("userAnswer").innerText = "";
+  }
+
+  function speakText() {
+    const utter = new SpeechSynthesisUtterance(data[index].a);
+    utter.lang = "en-US";
+    speechSynthesis.speak(utter);
+  }
+
+  function startRecord() {
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+
+    recognition.start();
+
+    recognition.onresult = function (event) {
+      document.getElementById("userAnswer").innerText =
+        "🗣️ คุณพูดว่า: " + event.results[0][0].transcript;
+    };
+  }
+
+  function nextQuestion() {
+    index = (index + 1) % data.length;
+    loadQuestion();
+  }
+
+  loadQuestion();
+</script>
+
+</body>
+</html>

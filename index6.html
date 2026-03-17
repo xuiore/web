@@ -1,0 +1,105 @@
+<!DOCTYPE html>  
+<html lang="th">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>ทิศทางสถานที่สำคัญ Loei</title>  
+    <style>  
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f4f4f4; line-height: 1.6; }  
+        h1 { text-align: center; color: #333; }  
+        .directions { max-width: 800px; margin: auto; }  
+        .place { background: white; margin: 15px 0; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative; }  
+        .place::before { content: "🗺️"; position: absolute; right: 15px; top: 15px; font-size: 24px; opacity: 0.7; }  
+        .place h3 { margin: 0 0 10px; color: #007bff; font-size: 1.3em; }  
+        .directions-text { font-weight: bold; color: #28a745; margin-bottom: 8px; }  
+        .eng-text { color: #d63384; font-style: italic; }  
+        button { background: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; margin-top: 10px; transition: background 0.3s; }  
+        button:hover { background: #0056b3; }  
+        @media (max-width: 600px) { .place { padding: 15px; } h3 { font-size: 1.1em; } }  
+    </style>  
+</head>  
+<body>  
+    <h1>🗺️ คำแนะนำทิศทางไปสถานที่สำคัญใน Loei</h1>  
+    <div class="directions">  
+        <div class="place">  
+            <h3>โรงแรม (Hotel)</h3>  
+            <p><span class="directions-text eng-text">Go straight on</span> (เดินตรงไป) 500m, <span class="directions-text eng-text">turn right</span> (เลี้ยวขวา) at the junction. It's <span class="directions-text eng-text">opposite to</span> (ตรงข้ามกับ) the park.</p>  
+            <button onclick="highlight('hotel')">ดูเส้นทางโรงแรม</button>  
+        </div>  
+        <div class="place">  
+            <h3>โรงเรียน (School)</h3>  
+            <p><span class="directions-text eng-text">Walk along</span> (เดินไปตามทาง) the main road, <span class="directions-text eng-text">go past the</span> (เดินผ่าน) canteen. <span class="directions-text eng-text">Turn left</span> (เลี้ยวซ้าย) 300m.</p>  
+            <button onclick="highlight('school')">ดูเส้นทางโรงเรียน</button>  
+        </div>  
+        <div class="place">  
+            <h3>โรงอาหาร (Canteen)</h3>  
+            <p><span class="directions-text eng-text">Go straight on</span> (เดินตรงไป) from school, <span class="directions-text eng-text">cross over the road</span> (ข้ามถนน). It's <span class="directions-text eng-text">next to</span> (ถัดจาก) the playground.</p>  
+            <button onclick="highlight('canteen')">ดูเส้นทางโรงอาหาร</button>  
+        </div>  
+        <div class="place">  
+            <h3>ร้านเครื่องเขียน (Stationery Store)</h3>  
+            <p><span class="directions-text eng-text">Turn right</span> (เลี้ยวขวา) at market, <span class="directions-text eng-text">walk along</span> (เดินไปตามทาง) 400m, <span class="directions-text eng-text">go past the</span> (เดินผ่าน) bakery.</p>  
+            <button onclick="highlight('stationery')">ดูเส้นทางร้านเครื่องเขียน</button>  
+        </div>  
+        <div class="place">  
+            <h3>โรงพยาบาล (Hospital)</h3>  
+            <p><span class="directions-text eng-text">Go straight on</span> (เดินตรงไป) the highway 1km, <span class="directions-text eng-text">turn left</span> (เลี้ยวซ้าย). <span class="directions-text eng-text">Opposite to</span> (ตรงข้ามกับ) drugstore.</p>  
+            <button onclick="highlight('hospital')">ดูเส้นทางโรงพยาบาล</button>  
+        </div>  
+        <div class="place">  
+            <h3>ร้านตัดผม (Barber Shop)</h3>  
+            <p><span class="directions-text eng-text">Walk along</span> (เดินไปตามทาง) market street, <span class="directions-text eng-text">turn right</span> (เลี้ยวขวา) 150m. <span class="directions-text eng-text">Next to</span> (ถัดจาก) grocer's shop.</p>  
+            <button onclick="highlight('barber')">ดูเส้นทางร้านตัดผม</button>  
+        </div>  
+        <div class="place">  
+            <h3>ร้านกาแฟ (Coffee Shop)</h3>  
+            <p><span class="directions-text eng-text">Go straight on</span> (เดินตรงไป) 250m from center, <span class="directions-text eng-text">cross over the road</span> (ข้ามถนน). <span class="directions-text eng-text">Go past the</span> (เดินผ่าน) florist's.</p>  
+            <button onclick="highlight('coffee')">ดูเส้นทางร้านกาแฟ</button>  
+        </div>  
+        <div class="place">  
+            <h3>โรงฆ่าสัตว์/ตลาดเนื้อ (Shambles)</h3>  
+            <p><span class="directions-text eng-text">Turn left</span> (เลี้ยวซ้าย) at fresh market, <span class="directions-text eng-text">walk along</span> (เดินไปตามทาง) 600m south.</p>  
+            <button onclick="highlight('shambles')">ดูเส้นทาง shambles</button>  
+        </div>  
+        <div class="place">  
+            <h3>โรงรถ/อู่ซ่อมรถ (Garage)</h3>  
+            <p><span class="directions-text eng-text">Go straight on</span> (เดินตรงไป) main road west 1.2km, <span class="directions-text eng-text">go past the</span> (เดินผ่าน) station.</p>  
+            <button onclick="highlight('garage')">ดูเส้นทาง garage</button>  
+        </div>  
+        <div class="place">  
+            <h3>ร้านขายยา (Drugstore)</h3>  
+            <p><span class="directions-text eng-text">Walk along</span> (เดินไปตามทาง) from hospital 400m north. <span class="directions-text eng-text">Next to</span> (ถัดจาก) clinic.</p>  
+            <button onclick="highlight('drugstore')">ดูเส้นทางร้านขายยา</button>  
+        </div>  
+        <div class="place">  
+            <h3>ร้านขายของชำ (Grocer's Shop)</h3>  
+            <p><span class="directions-text eng-text">Turn right</span> (เลี้ยวขวา) morning market, <span class="directions-text eng-text">go straight on</span> (เดินตรงไป) 300m east.</p>  
+            <button onclick="highlight('grocer')">ดูเส้นทางร้านขายของชำ</button>  
+        </div>  
+        <div class="place">  
+            <h3>ร้านดอกไม้ (Florist's)</h3>  
+            <p><span class="directions-text eng-text">Go past the</span> (เดินผ่าน) coffee shop, <span class="directions-text eng-text">turn left</span> (เลี้ยวซ้าย) 350m northeast.</p>  
+            <button onclick="highlight('florist')">ดูเส้นทางร้านดอกไม้</button>  
+        </div>  
+        <div class="place">  
+            <h3>ร้านเหล้า (Grogshop)</h3>  
+            <p><span class="directions-text eng-text">Walk along</span> (เดินไปตามทาง) southwest 500m at night, <span class="directions-text eng-text">cross over the road</span> (ข้ามถนน).</p>  
+            <button onclick="highlight('grogshop')">ดูเส้นทาง grogshop</button>  
+        </div>  
+        <div class="place">  
+            <h3>ร้านเบเกอรี่ (Bakery)</h3>  
+            <p><span class="directions-text eng-text">Go straight on</span> (เดินตรงไป) south 200m in morning, follow the smell. <span class="directions-text eng-text">Opposite to</span> (ตรงข้ามกับ) school.</p>  
+            <button onclick="highlight('bakery')">ดูเส้นทาง bakery</button>  
+        </div>  
+    </div>  
+    <script>  
+        function highlight(id) {  
+            // ลบ highlight เก่า  
+            document.querySelectorAll('.place').forEach(p => p.style.background = 'white');  
+            // highlight ปัจจุบัน  
+            event.target.closest('.place').style.background = '#e7f3ff';  
+            event.target.closest('.place').scrollIntoView({ behavior: 'smooth' });  
+        }  
+    </script>  
+</body>  
+</html>  

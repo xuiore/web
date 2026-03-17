@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Direction Game MASTER</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:linear-gradient(135deg,#000,#330000);
+  color:white;
+  text-align:center;
+}
+h1{color:#ff2e2e;}
+.card{
+  background:#111;
+  margin:20px auto;
+  padding:20px;
+  width:90%;
+  max-width:450px;
+  border-radius:15px;
+  box-shadow:0 0 20px red;
+}
+button{
+  background:red;
+  color:white;
+  border:none;
+  padding:10px;
+  margin:5px;
+  border-radius:8px;
+  cursor:pointer;
+}
+button:hover{background:#ff4d4d;}
+.timer{color:#00ff99;}
+.level{color:#00ccff;}
+input{padding:8px;width:80%;}
+</style>
+</head>
+<body>
+
+<h1>🧭 Direction Game MASTER</h1>
+<div class="level">Level: <span id="level">1</span></div>
+<div class="timer">⏳ Time: <span id="time">30</span></div>
+<div>Score: <span id="score">0</span></div>
+
+<div class="card">
+  <h3 id="question"></h3>
+  <input type="text" id="userAnswer" placeholder="Type or Speak Answer">
+  <br><br>
+
+  <button onclick="checkAnswer()">Submit</button>
+  <button onclick="speakQuestion()">🔊 Listen Question</button>
+  <button onclick="startVoice()">🎤 Speak</button>
+  <button onclick="nextQuestion()">Next</button>
+
+  <div id="feedback"></div>
+</div>
+
+<script>
+// -------- LEVEL SYSTEM --------
+let level=1;
+let score=0;
+let timeLeft=30;
+let timer;
+
+const levels=[
+[
+{q:"How do I go to the supermarket?",a:"Go straight on."},
+{q:"Turn at the corner?",a:"Turn right."}
+],
+[
+{q:"How do I cross the street?",a:"Cross over the road."},
+{q:"After the bank?",a:"Go past the bank."}
+],
+[
+{q:"Where is the café?",a:"It's next to the school."},
+{q:"Where is the hospital?",a:"It's opposite to the park."}
+]
+];
+
+// -------- RANDOM QUESTION --------
+let current;
+function nextQuestion(){
+  let questions=levels[level-1];
+  current=questions[Math.floor(Math.random()*questions.length)];
+  document.getElementById("question").innerText=current.q;
+  document.getElementById("userAnswer").value="";
+  document.getElementById("feedback").innerText="";
+}
+nextQuestion();
+
+// -------- TIMER --------
+function startTimer(){
+  timeLeft=30;
+  document.getElementById("time").innerText=timeLeft;
+  clearInterval(timer);
+  timer=setInterval(()=>{
+    timeLeft--;
+    document.getElementById("time").innerText=timeLeft;
+    if(timeLeft<=0){
+      clearInterval(timer);
+      alert("Time Up!");
+      nextQuestion();
+      startTimer();
+    }
+  },1000);
+}
+startTimer();
+
+// -------- AI SIMILARITY --------
+function similarity(a,b){
+  a=a.toLowerCase().replace(/[^\w\s]/gi,'');
+  b=b.toLowerCase().replace(/[^\w\s]/gi,'');
+  let same=0;
+  for(let i=0;i<a.length;i++){
+    if(b.includes(a[i])) same++;
+  }
+  return same/b.length;
+}
+
+function checkAnswer(){
+  let user=document.getElementById("userAnswer").value;
+  let sim=similarity(user,current.a);
+  if(sim>0.6){
+    score+=10;
+    document.getElementById("feedback").innerHTML="✅ Correct!";
+    if(score%40===0){
+      level++;
+      if(level>levels.length) level=levels.length;
+      document.getElementById("level").innerText=level;
+    }
+  }else{
+    document.getElementById("feedback").innerHTML="❌ Correct: "+current.a;
+  }
+  document.getElementById("score").innerText=score;
+}
+
+// -------- SPEECH RECOGNITION --------
+function startVoice(){
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+  recognition.lang="en-US";
+  recognition.start();
+  recognition.onresult=function(event){
+    document.getElementById("userAnswer").value=event.results[0][0].transcript;
+  }
+}
+
+// -------- TEXT TO SPEECH --------
+function speakQuestion(){
+  const speech = new SpeechSynthesisUtterance(current.q);
+  speech.lang = "en-US";
+  speech.rate = 0.9;
+  speech.pitch = 1;
+  window.speechSynthesis.speak(speech);
+}
+</script>
+
+</body>
+</html>
+
+
+  
